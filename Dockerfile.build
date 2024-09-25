@@ -1,0 +1,29 @@
+# Use Python 3.10 slim image
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the necessary files
+COPY setup.py .
+COPY requirements.txt .
+COPY myapiserver ./myapiserver
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -e .
+
+# Compile Python files to .pyc
+RUN python -m compileall -b /app/myapiserver
+
+# Create a dist directory with the correct package structure
+RUN mkdir -p /app/dist/myapiserver && \
+    cp -r /app/myapiserver/*.pyc /app/dist/myapiserver/ && \
+    cp -r /app/myapiserver/api /app/dist/myapiserver/ && \
+    find /app/dist -name "*.py" -delete
+
+# Copy setup.py to dist
+COPY setup.py /app/dist/
+
+# Set the entrypoint to copy files to the mounted volume
+ENTRYPOINT ["cp", "-r", "/app/dist/.", "/output/"]

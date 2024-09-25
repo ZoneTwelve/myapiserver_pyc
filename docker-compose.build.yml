@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  build_pyc:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    volumes:
+      - ./dist:/output
