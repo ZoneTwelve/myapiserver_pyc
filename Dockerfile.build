@@ -25,6 +25,8 @@ RUN mkdir -p /app/dist/myapiserver && \
 # Copy setup.py to dist
 COPY setup.py /app/dist/
 COPY requirements.txt /app/dist/
+COPY Dockerfile.run_after_build_release /app/dist/Dockerfile
+COPY docker-compose.run_after_build_release.yml /app/dist/docker-compose.yml
 
 # Set the entrypoint to copy files to the mounted volume
 ENTRYPOINT ["cp", "-r", "/app/dist/.", "/output/"]
