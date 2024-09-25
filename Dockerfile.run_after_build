@@ -1,0 +1,20 @@
+# Use Python 3.10 slim image
+FROM python:3.10-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy the compiled .pyc files, requirements, and setup.py
+COPY ./dist /app
+
+# Install dependencies
+RUN pip install --no-cache-dir -r /app/requirements.txt
+
+# Install the package
+RUN pip install -e .
+
+# Set the Python path to include the current directory
+ENV PYTHONPATH=/app
+
+# Run the server
+CMD ["python", "-m", "myapiserver.server"]

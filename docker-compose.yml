@@ -9,4 +9,5 @@ services:
       - "8000:8000"
     environment:
       - PYTHONPATH=/app
-    command: python myapiserver/server.pyc
+    #command: python myapiserver/server.pyc
+    command: python -m myapiserver.server

@@ -24,6 +24,7 @@ RUN mkdir -p /app/dist/myapiserver && \
 
 # Copy setup.py to dist
 COPY setup.py /app/dist/
+COPY requirements.txt /app/dist/
 
 # Set the entrypoint to copy files to the mounted volume
 ENTRYPOINT ["cp", "-r", "/app/dist/.", "/output/"]
